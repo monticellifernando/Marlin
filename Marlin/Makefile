@@ -609,10 +609,6 @@ TARGET = $(notdir $(CURDIR))
 VPATH = .
 VPATH += $(BUILD_DIR)
 VPATH += $(HARDWARE_SRC)
-VPATH += $(HOME)/Arduino/libraries/u8glib_git/csrc
-VPATH += $(HOME)/Arduino/libraries/u8glib_git/cppsrc
-VPATH += $(HOME)/Arduino/libraries/u8glib_git/fntsrc
-VPATH += $(HOME)/Arduino/libraries/u8glib_git/src/clib
 VPATH += $(HOME)/Arduino/libraries/LiquidCrystal/src
 
 ifeq ($(HARDWARE_VARIANT), $(filter $(HARDWARE_VARIANT),arduino Teensy Sanguino))
@@ -653,10 +649,10 @@ endif
 ifeq ($(U8GLIB), 1)
 	# Get the lib first:
 	# git clone https://github.com/olikraus/u8glib.git
-	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git
-	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/csrc
-	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/cppsrc
-	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/fntsrc
+	VPATH += $(HOME)/Arduino/libraries/u8glib_git/csrc
+	VPATH += $(HOME)/Arduino/libraries/u8glib_git/cppsrc
+	VPATH += $(HOME)/Arduino/libraries/u8glib_git/fntsrc
+	VPATH += $(HOME)/Arduino/libraries/u8glib_git/src/clib
 endif
 ifeq ($(TMC), 1)
 	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/TMCStepper/src
