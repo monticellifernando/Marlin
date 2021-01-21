@@ -604,10 +604,10 @@
 
 // Enable one of the options below for CoreXY, CoreXZ, or CoreYZ kinematics,
 // either in the usual order or reversed
-//#define COREXY
+#define COREXY
 //#define COREXZ
 //#define COREYZ
-#define COREYX
+//#define COREYX
 //#define COREZX
 //#define COREZY
 //#define MARKFORGED_XY  // MarkForged. See https://reprap.org/forum/read.php?152,504042
@@ -1088,9 +1088,10 @@
 // CoreXY -> No inversion: Y ok, X inverted
 // CoreXY -> X inverted: Y -> X, X -> -Y
 // CoreXY -> Y inverted: Y -> -X, X -> Y
+// CoreXY -> X,Y inverted: Y -> , X -> 
 // CoreYX -> Y inverted: Y -> ok, X inverted
 // CoreYX -> X inverted: Y ->  ok, X -> inverted
-// CoreYX -> X,Y inverted: Y ->  , X -> 
+// CoreYX -> X,Y inverted: Y -> X , X -> -Y
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR true
