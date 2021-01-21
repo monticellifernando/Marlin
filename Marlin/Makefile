@@ -83,7 +83,7 @@ endif
 # Arduino source install directory, and version number
 # On most linuxes this will be /usr/share/arduino
 ARDUINO_INSTALL_DIR  ?= ${HOME}/Arduino
-ARDUINO_VERSION      ?= 106
+ARDUINO_VERSION      ?= 10813
 
 # The installed Libraries are in the User folder
 ARDUINO_USER_DIR ?= ${HOME}/Arduino
@@ -93,8 +93,8 @@ ARDUINO_USER_DIR ?= ${HOME}/Arduino
 AVR_TOOLS_PATH ?=
 
 # Programmer configuration
-UPLOAD_RATE        ?= 57600
-AVRDUDE_PROGRAMMER ?= arduino
+UPLOAD_RATE        ?= 115200
+AVRDUDE_PROGRAMMER ?= wiring
 # On most linuxes this will be /dev/ttyACM0 or /dev/ttyACM1
 UPLOAD_PORT        ?= /dev/ttyUSB0
 
@@ -114,7 +114,7 @@ WIRE               ?= 0
 TONE               ?= 1
 
 # This defines if U8GLIB is needed (may require RELOC_WORKAROUND)
-U8GLIB             ?= 0
+U8GLIB             ?= 1
 
 # This defines whether to include the Trinamic TMCStepper library
 TMC                ?= 0
@@ -609,6 +609,11 @@ TARGET = $(notdir $(CURDIR))
 VPATH = .
 VPATH += $(BUILD_DIR)
 VPATH += $(HARDWARE_SRC)
+VPATH += $(HOME)/Arduino/libraries/u8glib_git/csrc
+VPATH += $(HOME)/Arduino/libraries/u8glib_git/cppsrc
+VPATH += $(HOME)/Arduino/libraries/u8glib_git/fntsrc
+VPATH += $(HOME)/Arduino/libraries/u8glib_git/src/clib
+VPATH += $(HOME)/Arduino/libraries/LiquidCrystal/src
 
 ifeq ($(HARDWARE_VARIANT), $(filter $(HARDWARE_VARIANT),arduino Teensy Sanguino))
   # Old libraries (avr-core 1.6.21 < / Arduino < 1.6.8)
@@ -643,17 +648,19 @@ ifeq ($(WIRE), 1)
   VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/avr/libraries/Wire/src/utility
 endif
 ifeq ($(NEOPIXEL), 1)
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/Adafruit_NeoPixel
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/Adafruit_NeoPixel
 endif
 ifeq ($(U8GLIB), 1)
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib/csrc
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib/cppsrc
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib/fntsrc
+	# Get the lib first:
+	# git clone https://github.com/olikraus/u8glib.git
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/csrc
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/cppsrc
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/u8glib_git/fntsrc
 endif
 ifeq ($(TMC), 1)
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/TMCStepper/src
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/TMCStepper/src/source
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/TMCStepper/src
+	VPATH += $(ARDUINO_INSTALL_DIR)/libraries/TMCStepper/src/source
 endif
 
 ifeq ($(HARDWARE_VARIANT), arduino)
@@ -836,7 +843,7 @@ endif
 AVRDUDE_PORT = $(UPLOAD_PORT)
 AVRDUDE_WRITE_FLASH = -Uflash:w:$(BUILD_DIR)/$(TARGET).hex:i
 ifeq ($(shell uname -s), Linux)
-  AVRDUDE_CONF = /etc/avrdude/avrdude.conf
+  AVRDUDE_CONF = /etc/avrdude.conf
 else
   AVRDUDE_CONF = $(ARDUINO_INSTALL_DIR)/hardware/tools/avr/etc/avrdude.conf
 endif
