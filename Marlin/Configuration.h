@@ -765,7 +765,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 //#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
-#define DEFAULT_MAX_ACCELERATION      { 300, 300, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 10000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1088,9 +1088,9 @@
 #define DISABLE_INACTIVE_EXTRUDER   // Keep only the active extruder enabled
 
 // @section machine
-// CoreXY -> No inversion: Y ok, X inverted
-// CoreXY -> X inverted: Y -> X, X -> -Y
-// CoreXY -> Y inverted: Y -> -X, X -> Y
+// CoreXY -> No inversion: Y ok, X inverted * 
+// CoreXY -> X inverted: Y -> X, X -> -Y  
+// CoreXY -> Y inverted: Y -> -X, X -> Y <--
 // CoreXY -> X,Y inverted: Y -> Invertido , X -> OK
 // CoreYX -> No Inverrion: Y -> -X, X -> Y
 // CoreYX -> Y inverted: Y -> ok, X inverted
@@ -1099,7 +1099,7 @@
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR false
-#define INVERT_Y_DIR false
+#define INVERT_Y_DIR true
 #define INVERT_Z_DIR true
 
 // @section extruder
@@ -1134,8 +1134,8 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 185
-#define Y_BED_SIZE 190
+#define X_BED_SIZE 170
+#define Y_BED_SIZE 170
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1143,7 +1143,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 150
+#define Z_MAX_POS 130
 
 /**
  * Software Endstops
